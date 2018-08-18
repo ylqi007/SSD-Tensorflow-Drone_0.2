@@ -147,6 +147,12 @@ class SSDNet(object):
                                       self.params.anchor_offset,
                                       dtype)
 
+    def bboxes_encode(self, labels, bboxes, anchors, scope=None):
+        """
+        Encode labels and bounding boxes.
+        """
+        return ssd_common.tf_ssd_bboxes_encode()
+
 
 def ssd_net(inputs,
             num_classes=SSDNet.default_params.num_classes,
@@ -236,6 +242,9 @@ def ssd_net(inputs,
                 localisations.append(l)
 
     return predictions, localisations, logits, end_points
+
+
+ssd_net.default_image_size = 300
 
 
 def ssd_arg_scope(weight_decay=0.0005, data_format='NHWC'):
